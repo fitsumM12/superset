@@ -72,7 +72,7 @@ CACHE_CONFIG = {
 }
 DATA_CACHE_CONFIG = CACHE_CONFIG
 THUMBNAIL_CACHE_CONFIG = CACHE_CONFIG
-
+EMBEDDED_SUPERSET = True
 
 class CeleryConfig:
     broker_url = f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_CELERY_DB}"
@@ -98,8 +98,16 @@ class CeleryConfig:
 
 
 CELERY_CONFIG = CeleryConfig
-
-FEATURE_FLAGS = {"ALERT_REPORTS": True}
+SECURITY = {
+    'AUTH_TYPE': 'DATABASE',
+    'AUTH_USER_MODEL': 'User',
+    'AUTH_ROLE_MODEL': 'Role',
+    'AUTH_USER_REGISTRATION_ROLE': 'Gamma',
+    'AUTH_USER_REGISTRATION': True,
+}
+FEATURE_FLAGS = {
+    "EMBEDDED_SUPERSET": True,
+    "ALERT_REPORTS": True}
 ALERT_REPORTS_NOTIFICATION_DRY_RUN = True
 WEBDRIVER_BASEURL = f"http://superset_app{os.environ.get('SUPERSET_APP_ROOT', '/')}/"  # When using docker compose baseurl should be http://superset_nginx{ENV{BASEPATH}}/  # noqa: E501
 # The base URL for the email report hyperlinks.
